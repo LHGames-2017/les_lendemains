@@ -1,5 +1,6 @@
 
 using LHGames.Actions;
+using LHGames.Nodes;
 using StarterProject.Web.Api;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,13 @@ namespace LHGames
         bool went_home = false;
         public HighAction NextAction(Map map, GameInfo gameInfo)
         {
-            if(!went_home && gameInfo.Player.Position != gameInfo.Player.HouseLocation)
+            if (!went_home)
             {
                 went_home = true;
-                return returnHomeAction(map, gameInfo);
+                if (gameInfo.Player.Position != gameInfo.Player.HouseLocation)
+                {
+                    return returnHomeAction(map, gameInfo);
+                }
             }
             if(gameInfo.Player.CarriedResources < gameInfo.Player.CarryingCapacity)
             {
@@ -57,14 +61,14 @@ namespace LHGames
 
         private HighAction collectAction(Map map, GameInfo gameInfo)
         {
-            Point player = gameInfo.Player.Position - new Point(1, 1);
-            for(int edge = 1; edge < map.tileTypeMap.GetLength(0); edge++)
+            Point player = gameInfo.Player.Position;
+            for (int edge = 1; edge < map.tileTypeMap.GetLength(0); edge++)
             {
-                for(int i = player.X - edge; i <= player.X + edge && i >= 0 && i < map.tileTypeMap.GetLength(0); i++)
+                for (int i = player.X - edge; i <= player.X + edge && i >= 0 && i < map.tileTypeMap.GetLength(0); i++)
                 {
-                    for(int j = player.Y - edge; j <= player.Y + edge && j >= 0 && j < map.tileTypeMap.GetLength(1); j++)
+                    for (int j = player.Y - edge; j <= player.Y + edge && j >= 0 && j < map.tileTypeMap.GetLength(1); j++)
                     {
-                        if(map.tileTypeMap[i,j] == TileType.R)
+                        if (map.tileTypeMap[i, j] == TileType.R)
                         {
                             Point target = new Point(i, j);
                             if (Point.DistanceManhatan(target, gameInfo.Player.Position) <= 1)
@@ -79,6 +83,7 @@ namespace LHGames
                     }
                 }
             }
+<<<<<<< HEAD
             return exploreAction(map,gameInfo);
         }
         private HighAction exploreAction(Map map, GameInfo gameInfo)
@@ -105,6 +110,18 @@ namespace LHGames
                     }
                 }
             }
+            //ResourceNode node = new ResourceNode(null, player, null, map.tileTypeMap[player.X, player.Y]);
+            //var astar = new AStar.AStar(node, null);
+            //if(astar.Run() == AStar.State.GoalFound)
+            //{
+            //    var nodes = astar.GetPath();
+            //    Point final = null;
+            //    foreach(var n in nodes)
+            //    {
+            //        final = n.Point;
+            //    }
+            //    return MultipleActions.MoveThenCollect(gameInfo, map, final);
+            //}
             return null;
         }
 

@@ -58,7 +58,9 @@ namespace LHGames.Actions
                 }
                 else if (type == TileType.W)
                 {
+                    Console.WriteLine("RAWR");
                     return AIHelper.CreateAttackAction(p);
+                    
                 }
                 idx++;
                 return AIHelper.CreateMoveAction(p);
