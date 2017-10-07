@@ -31,7 +31,7 @@ namespace LHGames
 
         private HighAction DefendHome(Map map, GameInfo gameInfo)
         {
-            whil
+            return null;
         }
 
         private HighAction DefendSelf(Map map, GameInfo gameInfo)

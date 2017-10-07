@@ -59,7 +59,7 @@ namespace StarterProject.Web.Api
             Y = y;
         }
 
-        public static bool operator ==(Point pt1, Point pt2)
+        /*public static bool operator ==(Point pt1, Point pt2)
         {
             if (pt1.X == pt2.X && pt1.Y == pt2.Y)
             {
@@ -74,7 +74,7 @@ namespace StarterProject.Web.Api
                 return false;
             }
             return true;
-        }
+        }*/
 
         public static Point operator -(Point pt1, Point pt2)
         {
