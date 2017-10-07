@@ -198,15 +198,10 @@ namespace AStar
 			{
 				// If the child has already been searched (closed list) or is on
 				// the open list to be searched then do not modify its movement cost
-				// or estimated cost since they have already been set previously.
-				if (child.IsOpenList(OpenList) || child.IsClosedList(ClosedList) || child.TileType == TileType.U || child.TileType == TileType.R)
+				if (child.IsOpenList(OpenList) || child.IsClosedList(ClosedList))
 				{
 					continue;
 				}
-                if (child.TileType == TileType.L && goal.TileType != TileType.L)
-                {
-                    continue;
-                }
 				child.Parent = current;
 				child.SetMovementCost(current);
 				child.SetEstimatedCost(goal);

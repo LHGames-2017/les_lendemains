@@ -24,6 +24,7 @@
         static HighAction currentAction = null;
         public static Map worldMap = new Map();
         static object mutex = new object();
+        static string logContent = "";
         
         [HttpPost]
         public string Index([FromForm]string map)
@@ -33,12 +34,13 @@
                 GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
                 var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
+                string output = "";
+
                 if (Debug.debug)
                 {
-                    Console.Write("Resources " + gameInfo.Player.CarriedResources);
-                    Console.Write(", Points " + gameInfo.Player.Score);
-                    Console.Write(", Pos " + gameInfo.Player.Position);
-                    Console.WriteLine();
+                    log("Resources " + gameInfo.Player.CarriedResources.ToString());
+                    log("Points " + gameInfo.Player.Score);
+                    log("Pos " + gameInfo.Player.Position);
                 }
 
                 // HOUSE + SHOP OVERRIDES
@@ -65,7 +67,7 @@
                         {
                             break;
                         }
-                        Console.WriteLine(currentAction);
+                        log(currentAction.ToString());
                     }
                     action = currentAction.NextAction(worldMap, gameInfo);
                     if (action == null)
@@ -73,6 +75,7 @@
                         currentAction = null;
                     }
                 }
+                commitLog();
                 return action;
             }
         }
@@ -88,6 +91,29 @@
                 }
                 Console.WriteLine(line);
             }
+        }
+
+        public void log(params string[] strs)
+        {
+            string str = "";
+            foreach (var s in strs)
+            {
+                str += s + "\n";
+            }
+            logContent += str;
+        }
+        
+        public void commitLog()
+        {
+            if (Debug.debug)
+            {
+                Console.Write(logContent);
+            }
+            else
+            {
+                Pastebin.AppendString(Pastebin.DEBUG_LOG_CHROUS_URL, logContent);
+            }
+            logContent = "";
         }
     }
 }

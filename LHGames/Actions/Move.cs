@@ -38,6 +38,11 @@ namespace LHGames.Actions
             }
         }
 
+        public Move(Point[] path)
+        {
+            this.path = path;
+        }
+
         public string NextAction(Map map, GameInfo gameInfo)
         {
             if (path == null)
@@ -46,12 +51,29 @@ namespace LHGames.Actions
             }
             else if(idx < path.Length)
             {
-                Point p = path[idx++];
-                var type = map.tileTypeMap[p.X, p.Y];
-                if (type == TileType.L || type == TileType.R || type == TileType.U || type == TileType.W)
-                {
-                    return null;
-                }
+                Point p = path[idx];
+//<<<<<<< HEAD
+//                //var type = map.tileTypeMap[p.X, p.Y];
+//                //if (type == TileType.L || type == TileType.R || type == TileType.U)
+//                //{
+//                //    return null;
+//                //}
+//                //else if(type == TileType.W)
+//                //{
+//                //    return AIHelper.CreateAttackAction(p);
+//                //}
+//=======
+//                var type = map.tileTypeMap[p.X, p.Y];
+//                if (type == TileType.L || type == TileType.R || type == TileType.U)
+//                {
+//                    return null;
+//                }
+//                else if(type == TileType.W)
+//                {
+//                    return AIHelper.CreateAttackAction(p);
+//                }
+//>>>>>>> 47e673e22de36b63c1d304d7c64739c5f8357b94
+                idx++;
                 return AIHelper.CreateMoveAction(p);
             }
             else
