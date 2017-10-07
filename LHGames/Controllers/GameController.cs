@@ -23,41 +23,45 @@
         static Strategy strategy = new Strategy();
         static HighAction currentAction = null;
         public static Map worldMap = new Map();
+        static object mutex = new object();
 
         [HttpPost]
         public string Index([FromForm]string map)
         {
-            GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
-            var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
-
-
-            //update map of the world
-            worldMap.UpdateMap(carte);
-
-            string action = null;
-            while(action == null)
+            lock (mutex)
             {
-                if(currentAction == null)
+                GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
+                var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
+
+
+                //update map of the world
+                worldMap.UpdateMap(carte);
+
+                string action = null;
+                while (action == null)
                 {
-                    currentAction = strategy.NextAction(worldMap, gameInfo);
                     if (currentAction == null)
                     {
-                        break;
+                        currentAction = strategy.NextAction(worldMap, gameInfo);
+                        if (currentAction == null)
+                        {
+                            break;
+                        }
+                    }
+                    action = currentAction.NextAction(worldMap, gameInfo);
+                    if (action == null)
+                    {
+                        currentAction = null;
                     }
                 }
-                action = currentAction.NextAction(worldMap, gameInfo);
-                if(action == null)
-                {
-                    currentAction = null;
-                }
-            }
 
-            Console.WriteLine((action ?? "null") + " " + gameInfo.Player.CarriedResources);
-            if (Debug.debug)
-            {
-                // PrintMap(carte);
+                Console.WriteLine((action ?? "null") + " " + gameInfo.Player.CarriedResources);
+                if (Debug.debug)
+                {
+                    // PrintMap(carte);
+                }
+                return action;
             }
-            return action;
         }
 
         public void PrintMap(Tile[,] carte)
