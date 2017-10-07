@@ -110,11 +110,9 @@
             }
             else
             {
-                if (logContent.Length >= 1024)
-                {
-                    Pastebin.AppendString(Pastebin.DEBUG_LOG_CHROUS_URL, logContent);
-                }
+                Pastebin.AppendString(Pastebin.DEBUG_LOG_CHROUS_URL, logContent);
             }
+            logContent = "";
         }
     }
 }
