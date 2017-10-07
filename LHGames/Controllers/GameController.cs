@@ -53,6 +53,7 @@
 
                 //update map of the world
                 worldMap.UpdateMap(carte);
+                worldMap.UpdateOtherPLayerMap(gameInfo.OtherPlayers);
 
                 string action = null;
                 while (action == null)
