@@ -8,7 +8,7 @@ namespace LHGames
 {
     public class Map
     {
-
+        public Dictionary<Point, KeyValuePair<string, PlayerInfo>> playersDictionnary = new Dictionary<Point, KeyValuePair<string, PlayerInfo>>();
         public TileType[,] tileTypeMap = new TileType[1024,1024];
         public Map()
         {
@@ -18,6 +18,13 @@ namespace LHGames
                 {
                     tileTypeMap[i, j] = TileType.U;
                 }
+            }
+        }
+        public void UpdateOtherPLayerMap(List<KeyValuePair<string, PlayerInfo>> OtherPlayers)
+        {
+            foreach (KeyValuePair<string, PlayerInfo> playerInfo in OtherPlayers)
+            {
+                playersDictionnary[playerInfo.Value.Position] = playerInfo;
             }
         }
         public void UpdateMap(Tile[,] vision)

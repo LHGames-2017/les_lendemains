@@ -43,7 +43,8 @@ namespace StarterProject.Web.Api
         L,  //Lava
         R,  //Resource
         S,   //Shop
-        U   // unknown
+        p,   // unknown
+        U
 
     }
 
@@ -57,6 +58,23 @@ namespace StarterProject.Web.Api
             X = x;
             Y = y;
         }
+
+        /*public static bool operator ==(Point pt1, Point pt2)
+        {
+            if (pt1.X == pt2.X && pt1.Y == pt2.Y)
+            {
+                return true;
+            }
+            return false;
+        }
+        public static bool operator !=(Point pt1, Point pt2)
+        {
+            if (pt1.X != pt2.X || pt1.Y != pt2.Y)
+            {
+                return false;
+            }
+            return true;
+        }*/
 
         public static Point operator -(Point pt1, Point pt2)
         {
