@@ -8,13 +8,18 @@ namespace LHGames.Actions
 {
     public class Attack : HighAction
     {
-
+        PlayerInfo enemie;
+        bool done = false;
+        public Attack(PlayerInfo enemie)
+        {
+            this.enemie = enemie;
+        }
         public string NextAction(Map map, GameInfo gameInfo)
         {
             if (!done)
             {
                 done = true;
-                return AIHelper.CreateCollectAction(target);
+                return AIHelper.CreateAttackAction(enemie.Position);
             }
             else
             {

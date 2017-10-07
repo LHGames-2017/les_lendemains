@@ -2,6 +2,7 @@
 using LHGames.Actions;
 using StarterProject.Web.Api;
 using System;
+using System.Collections.Generic;
 
 namespace LHGames
 {
@@ -10,7 +11,10 @@ namespace LHGames
         
         public HighAction NextAction(Map map, GameInfo gameInfo)
         {
-            if(gameInfo.Player.CarriedResources < gameInfo.Player.CarryingCapacity)
+            var action = DefendSelf(map, gameInfo);
+            if (action != null)
+                return action;
+            if (gameInfo.Player.CarriedResources < gameInfo.Player.CarryingCapacity)
             {
                 return collectAction(map, gameInfo);
             }
@@ -23,6 +27,30 @@ namespace LHGames
         private HighAction returnHomeAction(Map map, GameInfo gameInfo)
         {
             return new Move(gameInfo, map, gameInfo.Player.HouseLocation);
+        }
+
+        private HighAction DefendHome(Map map, GameInfo gameInfo)
+        {
+            whil
+        }
+
+        private HighAction DefendSelf(Map map, GameInfo gameInfo)
+        {
+            Player player = gameInfo.Player;
+            foreach (KeyValuePair<string, PlayerInfo> otherPlayer in gameInfo.OtherPlayers)
+            {
+                if (Point.DistanceManhatan(player.Position, otherPlayer.Value.Position) <= 1)
+                {
+                    return new Attack(otherPlayer.Value);
+                }
+            }
+            return null;
+
+        }
+
+        private HighAction KillPlayer(Map map, GameInfo gameInfo)
+        {
+            return null;
         }
 
         private HighAction collectAction(Map map, GameInfo gameInfo)
