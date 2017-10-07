@@ -33,8 +33,13 @@
                 GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
                 var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
-                Console.WriteLine("Resources " + gameInfo.Player.CarriedResources);
-                Console.WriteLine("Points " + gameInfo.Player.Score);
+                if (Debug.debug)
+                {
+                    Console.Write("Resources " + gameInfo.Player.CarriedResources);
+                    Console.Write(", Points " + gameInfo.Player.Score);
+                    Console.Write(", Pos " + gameInfo.Player.Position);
+                    Console.WriteLine();
+                }
 
                 // HOUSE + SHOP OVERRIDES
                 string overwrite = Override.AllOverwrites(gameInfo, carte);
