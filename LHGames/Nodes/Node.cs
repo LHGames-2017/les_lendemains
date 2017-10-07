@@ -27,7 +27,14 @@ namespace LHGames.Nodes
         /// </summary>
         public bool IsOpenList(IEnumerable<INode> openList)
         {
-            return isOpenList;
+            foreach (var node in openList)
+            {
+                if (Point.X == node.Point.X && Point.Y == node.Point.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -43,7 +50,14 @@ namespace LHGames.Nodes
         /// </summary>
         public bool IsClosedList(IEnumerable<INode> closedList)
         {
-            return isClosedList;
+            foreach (var node in closedList)
+            {
+                if (Point.X == node.Point.X && Point.Y == node.Point.Y)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
