@@ -144,6 +144,15 @@
                         case 0:
                             returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.DevolutionsPickaxe);
                             break;
+                        case 1:
+                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.DevolutionsBackpack);
+                            break;
+                        case 2:
+                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.UbisoftShield);
+                            break;
+                        case 3:
+                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.HealthPotion);
+                            break;
                         default:
                             returnValue = null;
                             break;
