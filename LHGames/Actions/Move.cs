@@ -58,5 +58,19 @@ namespace LHGames.Actions
         {
             return "Move to " + path[path.Length - 1];
         }
+
+        public static Move MoveAdjencent(GameInfo gameInfo, Map m, Point target)
+        {
+            Point diff = target - gameInfo.Player.Position;
+            if(diff.X >= diff.Y)
+            {
+                diff = new Point(diff.X > 0 ? 1 : -1, 0);
+            }
+            else
+            {
+                diff = new Point(0, diff.Y > 0 ? 1 : -1);
+            }
+            return new Move(gameInfo, m, target - diff);
+        }
     }
 }
