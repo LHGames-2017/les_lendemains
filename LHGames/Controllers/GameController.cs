@@ -33,18 +33,18 @@
                 GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
                 var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
-            // HOUSE + SHOP OVERRIDES
-            string overwrite = HouseOverwrite(gameInfo, carte);
-            if (overwrite != null)
-            {
-                return overwrite;
-            }
-            string overwrite2 = ShopOverwrite(gameInfo, carte);
-            if (overwrite2 != null)
-            {
-                return overwrite2;
-            }
-            // END OVERRIDE
+                // HOUSE + SHOP OVERRIDES
+                string overwrite = HouseOverwrite(gameInfo, carte);
+                if (overwrite != null)
+                {
+                    return overwrite;
+                }
+                string overwrite2 = ShopOverwrite(gameInfo, carte);
+                if (overwrite2 != null)
+                {
+                    return overwrite2;
+                }
+                // END OVERRIDE
 
 
                 //update map of the world
