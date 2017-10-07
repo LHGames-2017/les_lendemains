@@ -25,5 +25,10 @@ namespace LHGames.Actions
                 return null;
             }
         }
+
+        public override string ToString()
+        {
+            return "Collect at " + target.ToString();
+        }
     }
 }

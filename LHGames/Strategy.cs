@@ -56,7 +56,14 @@ namespace LHGames
             {
                 return null;
             }
-            return MultipleActions.MoveThenCollect(gameInfo, map, target);
+            if (Point.DistanceManhatan(target, gameInfo.Player.Position) <= 1)
+            {
+                return new Collect(gameInfo, target);
+            }
+            else
+            {
+                return MultipleActions.MoveThenCollect(gameInfo, map, target);
+            }
         }
     }
 }

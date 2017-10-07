@@ -60,18 +60,13 @@
                         {
                             break;
                         }
+                        Console.WriteLine(currentAction);
                     }
                     action = currentAction.NextAction(worldMap, gameInfo);
                     if (action == null)
                     {
                         currentAction = null;
                     }
-                }
-
-                Console.WriteLine((action ?? "null") + " " + gameInfo.Player.CarriedResources);
-                if (Debug.debug)
-                {
-                    // PrintMap(carte);
                 }
                 return action;
             }
