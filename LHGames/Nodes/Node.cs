@@ -9,6 +9,13 @@ namespace LHGames.Nodes
 {
     public class Node : INode
     {
+        public Node(Node goalNode, Point point, Node parent)
+        {
+            this.goalNode = goalNode;
+            Point = point;
+            Parent = parent;
+        }
+        private Node goalNode;
         public Point Point { get; set; }
         private bool isOpenList { get; set; }
         private bool isClosedList { get; set; }

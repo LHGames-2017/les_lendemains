@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LHGames.Nodes
 {
-    public class LavaNode : Node 
+    /*public class LavaNode : Node 
     {
-    }
+    }*/
 }
