@@ -23,12 +23,15 @@
         static Strategy strategy = new Strategy();
         static HighAction currentAction = null;
         public static Map worldMap = new Map();
+        static object mutex = new object();
 
         [HttpPost]
         public string Index([FromForm]string map)
         {
-            GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
-            var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
+            lock (mutex)
+            {
+                GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
+                var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
             // HOUSE + SHOP OVERRIDES
             string overwrite = HouseOverwrite(gameInfo, carte);
@@ -44,33 +47,34 @@
             // END OVERRIDE
 
 
-            //update map of the world
-            worldMap.UpdateMap(carte);
+                //update map of the world
+                worldMap.UpdateMap(carte);
 
-            string action = null;
-            while(action == null)
-            {
-                if(currentAction == null)
+                string action = null;
+                while (action == null)
                 {
-                    currentAction = strategy.NextAction(worldMap, gameInfo);
                     if (currentAction == null)
                     {
-                        break;
+                        currentAction = strategy.NextAction(worldMap, gameInfo);
+                        if (currentAction == null)
+                        {
+                            break;
+                        }
+                    }
+                    action = currentAction.NextAction(worldMap, gameInfo);
+                    if (action == null)
+                    {
+                        currentAction = null;
                     }
                 }
-                action = currentAction.NextAction(worldMap, gameInfo);
-                if(action == null)
-                {
-                    currentAction = null;
-                }
-            }
 
-            Console.WriteLine((action ?? "null") + " " + gameInfo.Player.CarriedResources);
-            if (Debug.debug)
-            {
-                // PrintMap(carte);
+                Console.WriteLine((action ?? "null") + " " + gameInfo.Player.CarriedResources);
+                if (Debug.debug)
+                {
+                    // PrintMap(carte);
+                }
+                return action;
             }
-            return action;
         }
         
         private static int upgradeCounter = 0;
