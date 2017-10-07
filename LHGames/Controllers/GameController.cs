@@ -37,9 +37,9 @@
 
                 if (Debug.debug)
                 {
-                    output += Debug.debug.ToString() + " Resources" + gameInfo.Player.CarriedResources.ToString() + "\n";
-                    output += Debug.debug.ToString() + " Points" + gameInfo.Player.Score + "\n";
-                    output += Debug.debug.ToString() + " Pos " + gameInfo.Player.Position + "\n";
+                    log("Resources " + gameInfo.Player.CarriedResources.ToString());
+                    log("Points " + gameInfo.Player.Score);
+                    log("Pos " + gameInfo.Player.Position);
                 }
 
                 // HOUSE + SHOP OVERRIDES
@@ -65,7 +65,7 @@
                         {
                             break;
                         }
-                        output += Debug.debug.ToString() + " " + currentAction.ToString() + "\n";
+                        log(currentAction.ToString());
                     }
                     action = currentAction.NextAction(worldMap, gameInfo);
                     if (action == null)
@@ -89,6 +89,16 @@
                 }
                 Console.WriteLine(line);
             }
+        }
+
+        public void log(params string[] strs)
+        {
+            string str = "";
+            foreach(var s in strs)
+            {
+                str += s + "\n";
+            }
+            Console.Write(str);
         }
     }
 }
