@@ -33,8 +33,14 @@
                 GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
                 var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
-                Console.WriteLine("Resources " + gameInfo.Player.CarriedResources);
-                Console.WriteLine("Points " + gameInfo.Player.Score);
+                string output = "";
+
+                if (Debug.debug)
+                {
+                    output += Debug.debug.ToString() + " Resources" + gameInfo.Player.CarriedResources.ToString() + "\n";
+                    output += Debug.debug.ToString() + " Points" + gameInfo.Player.Score + "\n";
+                    output += Debug.debug.ToString() + " Pos " + gameInfo.Player.Position + "\n";
+                }
 
                 // HOUSE + SHOP OVERRIDES
                 string overwrite = Override.AllOverwrites(gameInfo, carte);
@@ -59,7 +65,7 @@
                         {
                             break;
                         }
-                        Console.WriteLine(currentAction);
+                        output += Debug.debug.ToString() + " " + currentAction.ToString() + "\n";
                     }
                     action = currentAction.NextAction(worldMap, gameInfo);
                     if (action == null)
@@ -67,6 +73,7 @@
                         currentAction = null;
                     }
                 }
+                Pastebin.SaveObject(output);
                 return action;
             }
         }
