@@ -7,12 +7,12 @@ namespace LHGames.Actions
     {
         private Point target;
 
-        public Move(GameInfo gameInfo, Point target)
+        public Move(GameInfo gameInfo, Map map, Point target)
         {
             this.target = target;
         }
 
-        public string NextAction(GameInfo gameInfo)
+        public string NextAction(Map map, GameInfo gameInfo)
         {
             Point pos = gameInfo.Player.Position;
 

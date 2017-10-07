@@ -9,7 +9,7 @@ namespace LHGames
     public class Map
     {
 
-        public TileType[,] tileTypeMap = new TileType[16000,16000];
+        public TileType[,] tileTypeMap = new TileType[1024,1024];
         public Map()
         {
             for (int i = 0; i < tileTypeMap.GetLength(0); i++)

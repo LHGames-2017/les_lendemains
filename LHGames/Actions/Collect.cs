@@ -13,7 +13,7 @@ namespace LHGames.Actions
             this.target = target;
         }
 
-        public string NextAction(GameInfo gameInfo)
+        public string NextAction(Map map, GameInfo gameInfo)
         {
             if (!done)
             {

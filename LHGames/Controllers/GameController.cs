@@ -30,19 +30,29 @@
             GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
             var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
+
             //update map of the world
             worldMap.UpdateMap(carte);
-            if (currentAction == null)
+
+            string action = null;
+            while(action == null)
             {
-                currentAction = strategy.NextAction(gameInfo);
-            }
-            string action = currentAction?.NextAction(gameInfo);
-            if(action == null)
-            {
-                currentAction = null;
+                if(currentAction == null)
+                {
+                    currentAction = strategy.NextAction(worldMap, gameInfo);
+                    if (currentAction == null)
+                    {
+                        break;
+                    }
+                }
+                action = currentAction.NextAction(worldMap, gameInfo);
+                if(action == null)
+                {
+                    currentAction = null;
+                }
             }
 
-            Console.WriteLine(action ?? "null");
+            Console.WriteLine((action ?? "null") + " " + gameInfo.Player.CarriedResources);
             if (Debug.debug)
             {
                 // PrintMap(carte);

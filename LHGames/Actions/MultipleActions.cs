@@ -16,12 +16,12 @@ namespace LHGames.Actions
             this.actions = actions;
         }
 
-        public string NextAction(GameInfo gameInfo)
+        public string NextAction(Map map, GameInfo gameInfo)
         {
             string next = null;
             while(next == null)
             {
-                next = actions[idx]?.NextAction(gameInfo);
+                next = actions[idx]?.NextAction(map, gameInfo);
                 if(next == null)
                 {
                     ++idx;
@@ -32,7 +32,7 @@ namespace LHGames.Actions
             return next;
         }
         
-        public static MultipleActions MoveThenCollect(GameInfo gameInfo, Point target)
+        public static MultipleActions MoveThenCollect(GameInfo gameInfo, Map map, Point target)
         {
             Point diff = target - gameInfo.Player.Position;
 
@@ -41,25 +41,25 @@ namespace LHGames.Actions
             {
                 if(diff.X < 0)
                 {
-                    p = new Point(-1, 0);
+                    p = new Point(1, 0);
                 }
                 else
                 {
-                    p = new Point(1, 0);
+                    p = new Point(-1, 0);
                 }
             }
             else
             {
                 if(diff.Y < 0)
                 {
-                    p = new Point(0, -1);
+                    p = new Point(0, 1);
                 }
                 else
                 {
-                    p = new Point(0, 1);
+                    p = new Point(0, -1);
                 }
             }
-            Move move = new Move(gameInfo, target + p);
+            Move move = new Move(gameInfo, map, target + p);
             Collect collect = new Collect(gameInfo, target);
             return new MultipleActions(new HighAction[] { move, collect });
         }

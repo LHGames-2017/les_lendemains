@@ -6,6 +6,6 @@ namespace LHGames
     interface HighAction
     {
         // returns null when done
-        string NextAction(GameInfo gameInfo);
+        string NextAction(Map map, GameInfo gameInfo);
     }
 }
