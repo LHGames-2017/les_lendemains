@@ -27,20 +27,19 @@ namespace LHGames.Actions
                 var nodes = a.GetPath();
                 int size = 0;
                 foreach(var _ in nodes) ++size;
-                path = new Point[size];
+                path = new Point[size - 1];
 
                 int idx = 0;
                 foreach(var n in nodes)
                 {
-                    Node node = (Node)n;
-                    path[idx++] = node.Point;
+                    if (idx != 0)
+                    {
+                        Node node = (Node)n;
+                        path[idx - 1] = node.Point;
+                    }
+                    idx++;
                 }
             }
-        }
-
-        public Move(Point[] path)
-        {
-            this.path = path;
         }
 
         public string NextAction(Map map, GameInfo gameInfo)
@@ -52,27 +51,15 @@ namespace LHGames.Actions
             else if(idx < path.Length)
             {
                 Point p = path[idx];
-//<<<<<<< HEAD
-//                //var type = map.tileTypeMap[p.X, p.Y];
-//                //if (type == TileType.L || type == TileType.R || type == TileType.U)
-//                //{
-//                //    return null;
-//                //}
-//                //else if(type == TileType.W)
-//                //{
-//                //    return AIHelper.CreateAttackAction(p);
-//                //}
-//=======
-//                var type = map.tileTypeMap[p.X, p.Y];
-//                if (type == TileType.L || type == TileType.R || type == TileType.U)
-//                {
-//                    return null;
-//                }
-//                else if(type == TileType.W)
-//                {
-//                    return AIHelper.CreateAttackAction(p);
-//                }
-//>>>>>>> 47e673e22de36b63c1d304d7c64739c5f8357b94
+                var type = map.tileTypeMap[p.X, p.Y];
+                if (type == TileType.L || type == TileType.R || type == TileType.U)
+                {
+                    return null;
+                }
+                else if (type == TileType.W)
+                {
+                    return AIHelper.CreateAttackAction(p);
+                }
                 idx++;
                 return AIHelper.CreateMoveAction(p);
             }
@@ -84,7 +71,14 @@ namespace LHGames.Actions
 
         public override string ToString()
         {
-            return "Move to " + path[path.Length - 1];
+            if (path.Length > 0)
+            {
+                return "Move to " + path[path.Length - 1];
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public static Move MoveAdjencent(GameInfo gameInfo, Map m, Point target)
