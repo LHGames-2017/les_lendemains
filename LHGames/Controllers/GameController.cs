@@ -42,6 +42,8 @@
 
             
 
+            
+
             // INSERT AI CODE HERE.
 
             string action = AIHelper.CreateMoveAction(gameInfo.Player.Position);
@@ -56,6 +58,7 @@
         private static Object important_lock = new object();
         private string HouseOverwrite(GameInfo gameInfo, Tile[,] carte)
         {
+            // IF carrying cap is level 3 ( == 2500) dont buy
             lock (important_lock)
             {
                 string returnValue = null;
@@ -69,7 +72,6 @@
                             returnValue = AIHelper.CreateUpgradeAction(UpgradeType.CarryingCapacity);
                             break;
                         case 1:
-                            returnValue = AIHelper.CreateUpgradeAction(UpgradeType.CollectingSpeed);
                             break;
                         case 2:
                             returnValue = AIHelper.CreateUpgradeAction(UpgradeType.Defence);
@@ -118,6 +120,15 @@
                     {
                         case 0:
                             returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.DevolutionsPickaxe);
+                            break;
+                        case 1:
+                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.DevolutionsBackpack);
+                            break;
+                        case 2:
+                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.UbisoftShield);
+                            break;
+                        case 3:
+                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.HealthPotion);
                             break;
                         default:
                             returnValue = null;
