@@ -97,7 +97,7 @@ namespace LHGames.Nodes
         /// This is the heuristic from this node to the goal node, or h.
         /// </summary>
         public int EstimatedCost { get { return estimatedCost; } }
-        private int estimatedCost;
+        protected int estimatedCost;
         /// <summary>
         /// Sets the movement cost for the current node, or g.
         /// </summary>
@@ -111,7 +111,7 @@ namespace LHGames.Nodes
         /// Sets the estimated cost for the current node, or h.
         /// </summary>
         /// <param name="goal">Goal node, for acces to the goals position.</param>
-        public void SetEstimatedCost(INode goal)
+        public virtual void SetEstimatedCost(INode goal)
         {
             estimatedCost = (int)Point.DistanceManhatan(Point, goal.Point);
         }
@@ -131,21 +131,37 @@ namespace LHGames.Nodes
             get
             {
                 List<Node> childs = new List<Node>();
-                if (Point.X + 1 < 16000)
+                if (Point.X + 1 < GameController.worldMap.tileTypeMap.GetLength(0))
                 {
-                    childs.Add(new Node(goalNode, new Point(Point.X + 1, Point.Y), this, GameController.worldMap.tileTypeMap[Point.X + 1, Point.Y]));
+                    var type = GameController.worldMap.tileTypeMap[Point.X + 1, Point.Y];
+                    if (filterType(type))
+                    {
+                        childs.Add(create(goalNode, new Point(Point.X + 1, Point.Y), this, type));
+                    }
                 }
                 if (Point.X - 1 >= 0)
                 {
-                    childs.Add(new Node(goalNode, new Point(Point.X - 1, Point.Y), this, GameController.worldMap.tileTypeMap[Point.X - 1, Point.Y]));
+                    var type = GameController.worldMap.tileTypeMap[Point.X - 1, Point.Y];
+                    if (filterType(type))
+                    {
+                        childs.Add(create(goalNode, new Point(Point.X - 1, Point.Y), this, type));
+                    }
                 }
                 if (Point.Y -1 >= 0)
                 {
-                    childs.Add(new Node(goalNode, new Point(Point.X, Point.Y - 1), this, GameController.worldMap.tileTypeMap[Point.X, Point.Y - 1]));
+                    var type = GameController.worldMap.tileTypeMap[Point.X, Point.Y - 1];
+                    if (filterType(type))
+                    {
+                        childs.Add(create(goalNode, new Point(Point.X, Point.Y - 1), this, type));
+                    }
                 }
-                if (Point.Y + 1 < 16000)
+                if (Point.Y + 1 < GameController.worldMap.tileTypeMap.GetLength(1))
                 {
-                    childs.Add(new Node(goalNode, new Point(Point.X, Point.Y + 1), this, GameController.worldMap.tileTypeMap[Point.X, Point.Y + 1]));
+                    var type = GameController.worldMap.tileTypeMap[Point.X, Point.Y + 1];
+                    if (filterType(type))
+                    {
+                        childs.Add(create(goalNode, new Point(Point.X, Point.Y + 1), this, type));
+                    }
                 }
                 return childs;
             }
@@ -155,6 +171,16 @@ namespace LHGames.Nodes
         /// </summary>
         /// <param name="goal">The goal node to compare this node against.</param>
         /// <returns>True if this node is the goal, false if it s not the goal.</returns>
-        public bool IsGoal(INode goal) { return Point.X == goal.Point.X && Point.Y == goal.Point.Y; }
+        public virtual bool IsGoal(INode goal) { return Point.X == goal.Point.X && Point.Y == goal.Point.Y; }
+
+        protected virtual bool filterType(TileType type)
+        {
+            return type != TileType.R && type != TileType.L && type != TileType.U;
+        }
+
+        protected virtual Node create(Node goalNode, Point point, Node parent, TileType tileType)
+        {
+            return new Node(goalNode, point, parent, tileType);
+        }
     }
 }
