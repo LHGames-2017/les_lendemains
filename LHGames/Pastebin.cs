@@ -47,7 +47,7 @@ namespace LHGames
     static public class Pastebin
     {
         public static readonly string MY_PLAYER_STATS_URL = "https://api.myjson.com/bins/pmhrp";
-        public static readonly string DEBUG_LOG_CHROUS_URL = "https://api.myjson.com/bins/88f6t";
+        public static readonly string DEBUG_LOG_CHROUS_URL = "https://api.myjson.com/bins/vroqd";
 
         public static void SaveObject(string url, Object obj)
         {
