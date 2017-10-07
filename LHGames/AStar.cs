@@ -199,7 +199,7 @@ namespace AStar
 				// If the child has already been searched (closed list) or is on
 				// the open list to be searched then do not modify its movement cost
 				// or estimated cost since they have already been set previously.
-				if (child.IsOpenList(OpenList) || child.IsClosedList(ClosedList) || child.TileType == TileType.W || child.TileType == TileType.U || child.TileType == TileType.R)
+				if (child.IsOpenList(OpenList) || child.IsClosedList(ClosedList) || child.TileType == TileType.U || child.TileType == TileType.R)
 				{
 					continue;
 				}
