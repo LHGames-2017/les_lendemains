@@ -33,12 +33,13 @@
                 GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
                 var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
 
+                string output = "";
+
                 if (Debug.debug)
                 {
-                    Console.Write("Resources " + gameInfo.Player.CarriedResources);
-                    Console.Write(", Points " + gameInfo.Player.Score);
-                    Console.Write(", Pos " + gameInfo.Player.Position);
-                    Console.WriteLine();
+                    output += Debug.debug.ToString() + " Resources" + gameInfo.Player.CarriedResources.ToString() + "\n";
+                    output += Debug.debug.ToString() + " Points" + gameInfo.Player.Score + "\n";
+                    output += Debug.debug.ToString() + " Pos " + gameInfo.Player.Position + "\n";
                 }
 
                 // HOUSE + SHOP OVERRIDES
@@ -64,7 +65,7 @@
                         {
                             break;
                         }
-                        Console.WriteLine(currentAction);
+                        output += Debug.debug.ToString() + " " + currentAction.ToString() + "\n";
                     }
                     action = currentAction.NextAction(worldMap, gameInfo);
                     if (action == null)
@@ -72,6 +73,7 @@
                         currentAction = null;
                     }
                 }
+                Pastebin.SaveObject(output);
                 return action;
             }
         }
