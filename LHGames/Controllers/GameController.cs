@@ -20,19 +20,30 @@
     public class GameController : Controller
     {
         AIHelper player = new AIHelper();
+        static Strategy strategy = new Strategy();
+        static HighAction currentAction = null;
 
         [HttpPost]
         public string Index([FromForm]string map)
         {
             GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
             var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
-            
-            // INSERT AI CODE HERE.
 
-            string action = AIHelper.CreateMoveAction(gameInfo.Player.Position);
+            if(currentAction == null)
+            {
+                currentAction = strategy.NextAction(gameInfo);
+            }
+            string action = currentAction?.NextAction(gameInfo);
+            if(action == null)
+            {
+                currentAction = null;
+            }
+
+            Console.WriteLine(action ?? "null");
+
             if (Debug.debug)
             {
-                PrintMap(carte);
+                // PrintMap(carte);
             }
             return action;
         }
@@ -44,7 +55,6 @@
                 string line = "";
                 for (int j = 0; j < carte.GetLength(1); ++j)
                 {
-
                     line += (MapTileContent)carte[i, j].C;
                 }
                 Console.WriteLine(line);
