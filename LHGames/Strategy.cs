@@ -7,9 +7,14 @@ namespace LHGames
 {
     class Strategy
     {
-        
+        bool went_home = false;
         public HighAction NextAction(Map map, GameInfo gameInfo)
         {
+            if(!went_home && gameInfo.Player.Position != gameInfo.Player.HouseLocation)
+            {
+                went_home = true;
+                return returnHomeAction(map, gameInfo);
+            }
             if(gameInfo.Player.CarriedResources < gameInfo.Player.CarryingCapacity)
             {
                 return collectAction(map, gameInfo);

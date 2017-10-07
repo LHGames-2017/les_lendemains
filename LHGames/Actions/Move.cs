@@ -71,7 +71,14 @@ namespace LHGames.Actions
 
         public override string ToString()
         {
-            return "Move to " + path[path.Length - 1];
+            if (path.Length > 0)
+            {
+                return "Move to " + path[path.Length - 1];
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public static Move MoveAdjencent(GameInfo gameInfo, Map m, Point target)
