@@ -145,7 +145,6 @@ namespace LHGames.Nodes
                 return childs;
             }
         }
-        private List<Node> childs;
         /// <summary>
         /// Returns true if this node is the goal, false if it is not the goal.
         /// </summary>
