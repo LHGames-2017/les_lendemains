@@ -63,5 +63,16 @@ namespace LHGames.Actions
             Collect collect = new Collect(gameInfo, target);
             return new MultipleActions(new HighAction[] { move, collect });
         }
+
+        public override string ToString()
+        {
+            string res = "=== Multiple Actions\n";
+            foreach (var a in actions)
+            {
+                res += "   " + a.ToString() + "\n";
+            }
+            res += "===";
+            return res;
+        }
     }
 }

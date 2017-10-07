@@ -53,5 +53,10 @@ namespace LHGames.Actions
                 return null;
             }
         }
+
+        public override string ToString()
+        {
+            return "Move to " + path[path.Length - 1];
+        }
     }
 }
