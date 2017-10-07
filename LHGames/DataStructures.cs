@@ -42,7 +42,9 @@ namespace StarterProject.Web.Api
         H,  //House
         L,  //Lava
         R,  //Resource
-        S   //Shop
+        S,   //Shop
+        U   // unknown
+
     }
 
     public class Point
