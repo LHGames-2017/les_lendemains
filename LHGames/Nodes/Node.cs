@@ -1,5 +1,6 @@
 ﻿using AStar;
 using StarterProject.Web.Api;
+using StarterProject.Web.Api.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -107,8 +108,30 @@ namespace LHGames.Nodes
         /// <remarks>The children can be setup in a graph before starting the
         /// A* algorithm or they can be dynamically generated the first time
         /// the A* algorithm calls this property.</remarks>
-        public IEnumerable<INode> Children { get; }
-
+        public IEnumerable<INode> Children {
+            get
+            {
+                List<Node> childs = new List<Node>();
+                if (Point.X + 1 < 16000)
+                {
+                    childs.Add(new Node(goalNode, new Point(Point.X + 1, Point.Y), this, GameController.worldMap.tileTypeMap[Point.X + 1, Point.Y]));
+                }
+                if (Point.X - 1 >= 0)
+                {
+                    childs.Add(new Node(goalNode, new Point(Point.X - 1, Point.Y), this, GameController.worldMap.tileTypeMap[Point.X - 1, Point.Y]));
+                }
+                if (Point.Y -1 >= 0)
+                {
+                    childs.Add(new Node(goalNode, new Point(Point.X, Point.Y - 1), this, GameController.worldMap.tileTypeMap[Point.X, Point.Y - 1]));
+                }
+                if (Point.Y + 1 < 16000)
+                {
+                    childs.Add(new Node(goalNode, new Point(Point.X, Point.Y + 1), this, GameController.worldMap.tileTypeMap[Point.X, Point.Y + 1]));
+                }
+                return childs;
+            }
+        }
+        private List<Node> childs;
         /// <summary>
         /// Returns true if this node is the goal, false if it is not the goal.
         /// </summary>

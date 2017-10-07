@@ -24,6 +24,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using LHGames.Nodes;
 using StarterProject.Web.Api;
 using System.Collections.Generic;
 
@@ -192,12 +193,13 @@ namespace AStar
 
 			// Node was not the goal so add all children nodes to the open list.
 			// Each child needs to have its movement cost set and estimated cost.
+
 			foreach (var child in current.Children)
 			{
 				// If the child has already been searched (closed list) or is on
 				// the open list to be searched then do not modify its movement cost
 				// or estimated cost since they have already been set previously.
-				if (child.IsOpenList(OpenList) || child.IsClosedList(ClosedList) || child.TileType == TileType.W || child.TileType == TileType.T)
+				if (child.IsOpenList(OpenList) || child.IsClosedList(ClosedList) || child.TileType == TileType.W || child.TileType == TileType.T || child.TileType == TileType.U)
 				{
 					continue;
 				}
