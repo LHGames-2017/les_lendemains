@@ -22,9 +22,8 @@ namespace StarterProject.Web.Api
             }
             return null;
         }
-
-
-        private static int upgradeCounter = 0;
+        
+        private static bool previouslyOnHouse = false;
         private static Object important_lock = new object();
         private static string HouseOverwrite(GameInfo gameInfo, Tile[,] carte)
         {
@@ -35,48 +34,22 @@ namespace StarterProject.Web.Api
                 // If we are on the house, do upgrades
                 if (gameInfo.Player.Position.X == gameInfo.Player.HouseLocation.X && gameInfo.Player.Position.Y == gameInfo.Player.HouseLocation.Y)
                 {
-                    switch (upgradeCounter)
+                    if (!previouslyOnHouse)
                     {
-                        case 0:
-                            Random rnd = new Random();
-                            int rndNumber = rnd.Next(1, 5);
-                            Console.WriteLine("RANDOM");
-                            Console.WriteLine(rndNumber);
-                            if(rndNumber != 4)
-                            {
-                                // 80% chance to skip
-                                returnValue = null;
-                                upgradeCounter = 1024; //mucho mucho
-                                break;
-                            }
-
-                            returnValue = AIHelper.CreateUpgradeAction(UpgradeType.CarryingCapacity);
-                            break;
-                        case 1:
-                            returnValue = AIHelper.CreateUpgradeAction(UpgradeType.CollectingSpeed);
-                            break;
-                        /*case 2:
-                            returnValue = AIHelper.CreateUpgradeAction(UpgradeType.Defence);
-                            break;
-                        case 3:
-                            returnValue = AIHelper.CreateUpgradeAction(UpgradeType.MaximumHealth);
-                            break;*/
-                        default:
-                            returnValue = null;
-                            break;
+                        MyPlayer myPlayer = Pastebin.GetSavedObject<MyPlayer>(Pastebin.MY_PLAYER_STATS_URL);
+                        returnValue = AIHelper.CreateUpgradeAction(myPlayer.NextUpgrade);
                     }
-                    upgradeCounter++;
+                    previouslyOnHouse = true;
                 }
                 else
                 {
-                    //reset the upgrade counter
-                    upgradeCounter = 0;
+                    previouslyOnHouse = false;
                 }
                 return returnValue;
             }
         }
 
-        private static int buyCounter = 0;
+        private static bool previouslyOnShop = false;
         private static Object importanter_lock = new object();
         private static string ShopOverwrite(GameInfo gameInfo, Tile[,] carte)
         {
@@ -98,30 +71,16 @@ namespace StarterProject.Web.Api
                 // If we are on the shop, buy stuff
                 if (myTile == TileContent.Shop)
                 {
-                    switch (buyCounter)
+                    if (!previouslyOnShop)
                     {
-                        case 0:
-                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.DevolutionsPickaxe);
-                            break;
-                        case 1:
-                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.DevolutionsBackpack);
-                            break;
-                        /*case 2:
-                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.UbisoftShield);
-                            break;
-                        case 3:
-                            returnValue = AIHelper.CreatePurchaseAction(PurchasableItem.HealthPotion);
-                            break;*/
-                        default:
-                            returnValue = null;
-                            break;
+                        MyPlayer myPlayer = Pastebin.GetSavedObject<MyPlayer>(Pastebin.MY_PLAYER_STATS_URL);
+                        returnValue = AIHelper.CreatePurchaseAction(myPlayer.NextItem);
                     }
-                    buyCounter++;
+                    previouslyOnShop = true;
                 }
                 else
                 {
-                    //reset the upgrade counter
-                    buyCounter = 0;
+                    previouslyOnShop = false;
                 }
                 return returnValue;
             }

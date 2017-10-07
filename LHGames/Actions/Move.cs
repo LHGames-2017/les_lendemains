@@ -46,12 +46,17 @@ namespace LHGames.Actions
             }
             else if(idx < path.Length)
             {
-                Point p = path[idx++];
+                Point p = path[idx];
                 var type = map.tileTypeMap[p.X, p.Y];
-                if (type == TileType.L || type == TileType.R || type == TileType.U || type == TileType.W)
+                if (type == TileType.L || type == TileType.R || type == TileType.U)
                 {
                     return null;
                 }
+                else if(type == TileType.W)
+                {
+                    return AIHelper.CreateAttackAction(p);
+                }
+                idx++;
                 return AIHelper.CreateMoveAction(p);
             }
             else

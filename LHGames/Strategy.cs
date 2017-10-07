@@ -27,43 +27,29 @@ namespace LHGames
 
         private HighAction collectAction(Map map, GameInfo gameInfo)
         {
-            double closest = 0;
-            Point target = null;
-            for (int i = 0; i < map.tileTypeMap.GetLength(0); i++)
+            Point player = gameInfo.Player.Position - new Point(1, 1);
+            for(int edge = 1; edge < map.tileTypeMap.GetLength(0); edge++)
             {
-                for (int j = 0; j < map.tileTypeMap.GetLength(1); j++)
+                for(int i = player.X - edge; i <= player.X + edge && i >= 0 && i < map.tileTypeMap.GetLength(0); i++)
                 {
-                    if (map.tileTypeMap[i, j] == TileType.R)
+                    for(int j = player.Y - edge; j <= player.Y + edge && j >= 0 && j < map.tileTypeMap.GetLength(1); j++)
                     {
-                        if (target == null)
+                        if(map.tileTypeMap[i,j] == TileType.R)
                         {
-                            target = new Point(i, j);
-                            closest = Point.Distance(gameInfo.Player.Position, target);
-                        }
-                        else
-                        {
-                            if (Point.Distance(gameInfo.Player.Position, new Point(i, j)) < closest)
+                            Point target = new Point(i, j);
+                            if (Point.DistanceManhatan(target, gameInfo.Player.Position) <= 1)
                             {
-                                target = new Point(i, j);
-                                closest = Point.Distance(gameInfo.Player.Position, target);
+                                return new Collect(gameInfo, target);
+                            }
+                            else
+                            {
+                                return MultipleActions.MoveThenCollect(gameInfo, map, target);
                             }
                         }
                     }
                 }
             }
-            // Console.WriteLine("Found " + (target?.ToString() ?? "null"));
-            if (target == null)
-            {
-                return null;
-            }
-            if (Point.DistanceManhatan(target, gameInfo.Player.Position) <= 1)
-            {
-                return new Collect(gameInfo, target);
-            }
-            else
-            {
-                return MultipleActions.MoveThenCollect(gameInfo, map, target);
-            }
+            return null;
         }
     }
 }

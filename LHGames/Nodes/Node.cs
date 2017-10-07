@@ -77,7 +77,12 @@ namespace LHGames.Nodes
         {
             get
             {
-                return MovementCost + EstimatedCost;
+                int cost = movementCost + estimatedCost;
+                if (TileType == TileType.W)
+                {
+                    cost += 4;
+                }
+                return cost;
             }
         }
 

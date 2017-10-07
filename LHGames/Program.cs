@@ -13,13 +13,9 @@ namespace StarterProject.Web.Api
     {
         public static void Main(string[] args)
         {
-            if (Debug.debug)
+            if (!Debug.debug)
             {
-                Pastebin.SetDebug();
-            }
-            else
-            {
-                Pastebin.SetRelease();
+                Pastebin.SaveString(Pastebin.DEBUG_LOG_CHROUS_URL, "");
             }
             var host = new WebHostBuilder()
                 .UseKestrel()
