@@ -24,6 +24,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using StarterProject.Web.Api;
 using System.Collections.Generic;
 
 namespace AStar
@@ -40,10 +41,11 @@ namespace AStar
 	/// </summary>
 	public interface INode
 	{
-		/// <summary>
-		/// Determines if this node is on the open list.
-		/// </summary>
-		bool IsOpenList(IEnumerable<INode> openList);
+
+        /// <summary>
+        /// Determines if this node is on the open list.
+        /// </summary>
+        bool IsOpenList(IEnumerable<INode> openList);
 
 		/// <summary>
 		/// Sets this node to be on the open list.
@@ -79,6 +81,8 @@ namespace AStar
 		/// </summary>
 		int EstimatedCost { get; }
 		
+        Point Point { get; set; }
+
 		/// <summary>
 		/// Sets the movement cost for the current node, or g.
 		/// </summary>
