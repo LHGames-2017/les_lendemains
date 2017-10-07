@@ -38,6 +38,18 @@ namespace StarterProject.Web.Api
                     switch (upgradeCounter)
                     {
                         case 0:
+                            Random rnd = new Random();
+                            int rndNumber = rnd.Next(1, 5);
+                            Console.WriteLine("RANDOM");
+                            Console.WriteLine(rndNumber);
+                            if(rndNumber != 4)
+                            {
+                                // 80% chance to skip
+                                returnValue = null;
+                                upgradeCounter = 1024; //mucho mucho
+                                break;
+                            }
+
                             returnValue = AIHelper.CreateUpgradeAction(UpgradeType.CarryingCapacity);
                             break;
                         case 1:
