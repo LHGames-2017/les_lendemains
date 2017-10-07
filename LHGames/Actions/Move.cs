@@ -7,7 +7,7 @@ namespace LHGames.Actions
     {
         private Point target;
 
-        public Move(Point target)
+        public Move(GameInfo gameInfo, Point target)
         {
             this.target = target;
         }
