@@ -15,14 +15,11 @@ namespace StarterProject.Web.Api
         {
             if (Debug.debug)
             {
-                if (Debug.debug)
-                {
-                    Pastebin.SetDebug();
-                }
-                else
-                {
-                    Pastebin.SetRelease();
-                }
+                Pastebin.SetDebug();
+            }
+            else
+            {
+                Pastebin.SetRelease();
             }
             var host = new WebHostBuilder()
                 .UseKestrel()
