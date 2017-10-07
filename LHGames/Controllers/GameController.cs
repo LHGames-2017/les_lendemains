@@ -22,7 +22,7 @@
         AIHelper player = new AIHelper();
         static Strategy strategy = new Strategy();
         static HighAction currentAction = null;
-        static Map worldMap = new Map();
+        public static Map worldMap = new Map();
 
         [HttpPost]
         public string Index([FromForm]string map)
