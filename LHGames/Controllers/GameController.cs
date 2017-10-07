@@ -24,6 +24,7 @@
         static HighAction currentAction = null;
         public static Map worldMap = new Map();
         static object mutex = new object();
+        static string logContent = "";
         
         [HttpPost]
         public string Index([FromForm]string map)
@@ -73,7 +74,7 @@
                         currentAction = null;
                     }
                 }
-                Pastebin.SaveObject(output);
+                commitLog();
                 return action;
             }
         }
@@ -98,13 +99,21 @@
             {
                 str += s + "\n";
             }
+            logContent += str;
+        }
+        
+        public void commitLog()
+        {
             if (Debug.debug)
             {
-                Console.Write(str);
+                Console.Write(logContent);
             }
             else
             {
-
+                if (logContent.Length >= 1024)
+                {
+                    Pastebin.AppendString(Pastebin.DEBUG_LOG_CHROUS_URL, logContent);
+                }
             }
         }
     }
