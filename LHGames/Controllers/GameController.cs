@@ -91,12 +91,12 @@
                         case 1:
                             returnValue = AIHelper.CreateUpgradeAction(UpgradeType.CollectingSpeed);
                             break;
-                        case 2:
+                        /*case 2:
                             returnValue = AIHelper.CreateUpgradeAction(UpgradeType.Defence);
                             break;
                         case 3:
                             returnValue = AIHelper.CreateUpgradeAction(UpgradeType.MaximumHealth);
-                            break;
+                            break;*/
                         default:
                             returnValue = null;
                             break;
