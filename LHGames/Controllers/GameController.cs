@@ -94,11 +94,18 @@
         public void log(params string[] strs)
         {
             string str = "";
-            foreach(var s in strs)
+            foreach (var s in strs)
             {
                 str += s + "\n";
             }
-            Console.Write(str);
+            if (Debug.debug)
+            {
+                Console.Write(str);
+            }
+            else
+            {
+
+            }
         }
     }
 }
