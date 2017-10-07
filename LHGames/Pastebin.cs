@@ -45,34 +45,30 @@ Test newT = LHGames.Pastebin.GetSavedObject<Test>();
 namespace LHGames
 {
     static public class Pastebin
-    { 
-        public static void SaveObject(Object obj)
+    {
+        public static readonly string MY_PLAYER_STATS_URL = "https://api.myjson.com/bins/pmhrp";
+        public static readonly string DEBUG_LOG_CHROUS_URL = "https://api.myjson.com/bins/88f6t";
+
+        public static void SaveObject(string url, Object obj)
         {
             string str = JsonConvert.SerializeObject(obj, Formatting.None);
-            SaveString(str);
+            SaveString(url, str);
         }
 
-        public static T GetSavedObject<T>()
+        public static T GetSavedObject<T>(string url)
         {
-            string str = GetSavedString();
+            string str = GetSavedString(url);
             return JsonConvert.DeserializeObject<T>(str);
         }
 
-        public static void SetDebug()
+        public static void AppendString(string url, string value)
         {
-            Url = "https://api.myjson.com/bins/pmhrp";
+            string mystr = GetSavedString(url);
+            mystr += value;
+            SaveString(url, mystr);
         }
 
-        public static void SetRelease()
-        {
-            Url = "https://api.myjson.com/bins/88f6t";
-        }
-
-        private static String Url { get; set; }
-
-        //Private stuff dont look
-
-        private static void SaveString(string value)
+        public static void SaveString(string url, string value)
         {
             using (var client = new HttpClient())
             {
@@ -80,16 +76,14 @@ namespace LHGames
                 string jsonString = JsonConvert.SerializeObject(values, Formatting.None);
 
                 var httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                var message = client.PutAsync("https://api.myjson.com/bins/88f6t", httpContent);
+                var message = client.PutAsync(url, httpContent);
 
                 var test = message.Result;
             }
         }
 
-        private static string GetSavedString()
+        public static string GetSavedString(string url)
         {
-            var url = "https://api.myjson.com/bins/88f6t";
-
             var request = (HttpWebRequest)WebRequest.Create(url);
             var response = (HttpWebResponse)request.GetResponse();
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();

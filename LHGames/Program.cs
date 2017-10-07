@@ -13,14 +13,6 @@ namespace StarterProject.Web.Api
     {
         public static void Main(string[] args)
         {
-            if (Debug.debug)
-            {
-                Pastebin.SetDebug();
-            }
-            else
-            {
-                Pastebin.SetRelease();
-            }
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseUrls("http://*:8080")
