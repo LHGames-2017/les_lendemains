@@ -22,14 +22,17 @@
         AIHelper player = new AIHelper();
         static Strategy strategy = new Strategy();
         static HighAction currentAction = null;
+        static Map worldMap = new Map();
 
         [HttpPost]
         public string Index([FromForm]string map)
         {
             GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
             var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
-            
-            if(currentAction == null)
+
+            //update map of the world
+            worldMap.UpdateMap(carte);
+            if (currentAction == null)
             {
                 currentAction = strategy.NextAction(gameInfo);
             }
