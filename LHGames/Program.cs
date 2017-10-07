@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
+using LHGames;
 
 namespace StarterProject.Web.Api
 {
@@ -12,6 +13,17 @@ namespace StarterProject.Web.Api
     {
         public static void Main(string[] args)
         {
+            if (Debug.debug)
+            {
+                if (Debug.debug)
+                {
+                    Pastebin.SetDebug();
+                }
+                else
+                {
+                    Pastebin.SetRelease();
+                }
+            }
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseUrls("http://*:8080")
