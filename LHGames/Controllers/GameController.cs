@@ -28,7 +28,7 @@
         {
             GameInfo gameInfo = JsonConvert.DeserializeObject<GameInfo>(map);
             var carte = AIHelper.DeserializeMap(gameInfo.CustomSerializedMap);
-
+            
             if(currentAction == null)
             {
                 currentAction = strategy.NextAction(gameInfo);
@@ -40,7 +40,6 @@
             }
 
             Console.WriteLine(action ?? "null");
-
             if (Debug.debug)
             {
                 // PrintMap(carte);

@@ -70,6 +70,10 @@ namespace StarterProject.Web.Api
         {
             return Math.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y));
         }
+        public static double DistanceManhatan(Point p1, Point p2)
+        {
+            return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
+        }
         public override string ToString()
         {
             return string.Format("{{{0}, {1}}}", X, Y);
