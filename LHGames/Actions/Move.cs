@@ -1,42 +1,57 @@
 
+using LHGames.Nodes;
 using StarterProject.Web.Api;
+using System;
+using System.Collections.Generic;
 
 namespace LHGames.Actions
 {
     class Move : HighAction
     {
-        private Point target;
+        private Point[] path;
+        int idx = 0;
 
         public Move(GameInfo gameInfo, Map map, Point target)
         {
-            this.target = target;
+            Node goal = new Node(null, target, null, map.tileTypeMap[target.X, target.Y]);
+            Node start = new Node(goal, gameInfo.Player.Position, null, map.tileTypeMap[gameInfo.Player.Position.X, gameInfo.Player.Position.Y]);
+            var a = new AStar.AStar(start, goal);
+            var status = a.Run();
+            if(status != AStar.State.GoalFound)
+            {
+                path = null;
+                Console.WriteLine("Cannot find path");
+            }
+            else
+            {
+                var nodes = a.GetPath();
+                int size = 0;
+                foreach(var _ in nodes) ++size;
+                path = new Point[size];
+
+                int idx = 0;
+                foreach(var n in nodes)
+                {
+                    Node node = (Node)n;
+                    path[idx++] = node.Point;
+                }
+            }
         }
 
         public string NextAction(Map map, GameInfo gameInfo)
         {
-            Point pos = gameInfo.Player.Position;
-
-            if (target.X < pos.X)
+            if (path == null)
             {
-                pos += new Point(-1, 0);
+                return null;
             }
-            else if(target.X > pos.X)
+            else if(idx < path.Length)
             {
-                pos += new Point(1, 0);
-            }
-            else if(target.Y < pos.Y)
-            {
-                pos += new Point(0, -1);
-            }
-            else if(target.Y > pos.Y)
-            {
-                pos += new Point(0, 1);
+                return AIHelper.CreateMoveAction(path[idx++]);
             }
             else
             {
                 return null;
             }
-            return AIHelper.CreateMoveAction(pos);
         }
     }
 }
