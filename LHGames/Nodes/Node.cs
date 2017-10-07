@@ -9,11 +9,13 @@ namespace LHGames.Nodes
 {
     public class Node : INode
     {
-        public Node(Node goalNode, Point point, Node parent)
+        public TileType TileType { get; set; }
+        public Node(Node goalNode, Point point, Node parent, TileType tileType)
         {
             this.goalNode = goalNode;
             Point = point;
             Parent = parent;
+            TileType = TileType;
         }
         private Node goalNode;
         public Point Point { get; set; }

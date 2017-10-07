@@ -42,6 +42,7 @@ namespace AStar
 	public interface INode
 	{
 
+        TileType TileType { get; set; }
         /// <summary>
         /// Determines if this node is on the open list.
         /// </summary>

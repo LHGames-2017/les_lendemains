@@ -30,6 +30,7 @@
             // INSERT AI CODE HERE.
 
             string action = AIHelper.CreateMoveAction(gameInfo.Player.Position);
+            Console.WriteLine(action);
             if (Debug.debug)
             {
                 PrintMap(carte);
