@@ -54,7 +54,7 @@ namespace LHGames.Actions
                 var type = map.tileTypeMap[p.X, p.Y];
                 if (type == TileType.L || type == TileType.R || type == TileType.U)
                 {
-                    return null;
+                    throw new Cancel();
                 }
                 else if (type == TileType.W)
                 {

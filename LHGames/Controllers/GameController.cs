@@ -69,7 +69,14 @@
                         }
                         log(currentAction.ToString());
                     }
-                    action = currentAction.NextAction(worldMap, gameInfo);
+                    try
+                    {
+                        action = currentAction.NextAction(worldMap, gameInfo);
+                    }
+                    catch(Cancel)
+                    {
+                        // nothing
+                    }
                     if (action == null)
                     {
                         currentAction = null;

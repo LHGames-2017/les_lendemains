@@ -19,10 +19,10 @@ namespace LHGames.Actions
         public string NextAction(Map map, GameInfo gameInfo)
         {
             string next = null;
-            while(next == null)
+            while (next == null)
             {
                 next = actions[idx]?.NextAction(map, gameInfo);
-                if(next == null)
+                if (next == null)
                 {
                     ++idx;
                 }

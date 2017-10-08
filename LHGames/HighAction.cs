@@ -1,5 +1,6 @@
 
 using StarterProject.Web.Api;
+using System;
 
 namespace LHGames
 {
@@ -7,5 +8,10 @@ namespace LHGames
     {
         // returns null when done
         string NextAction(Map map, GameInfo gameInfo);
+    }
+
+    class Cancel : Exception
+    {
+
     }
 }

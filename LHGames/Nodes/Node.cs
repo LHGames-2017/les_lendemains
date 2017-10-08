@@ -175,7 +175,7 @@ namespace LHGames.Nodes
 
         protected virtual bool filterType(TileType type)
         {
-            return type != TileType.R && type != TileType.L && type != TileType.U;
+            return type != TileType.R && type != TileType.L;
         }
 
         protected virtual Node create(Node goalNode, Point point, Node parent, TileType tileType)
